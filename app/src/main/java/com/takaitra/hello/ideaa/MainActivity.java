@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
             String uri = String.format("http://maps.google.com/maps?daddr=%s", address.getValue());
             Intent addressIntent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
             addressIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-            PendingIntent addressPendingIntent = PendingIntent.getActivity(this, 0, addressIntent, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent addressPendingIntent = PendingIntent.getActivity(this, 0, addressIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             CustomTile.ExpandedListItem expandedListItem = new CustomTile.ExpandedListItem();
             expandedListItem.setExpandedListItemDrawable(R.drawable.ic_launcher);
