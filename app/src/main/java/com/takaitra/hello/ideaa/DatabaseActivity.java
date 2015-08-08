@@ -2,6 +2,8 @@ package com.takaitra.hello.ideaa;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -11,7 +13,7 @@ import com.takaitra.hello.ideaa.model.Location;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class DatabaseActivity extends ActionBarActivity {
+public class DatabaseActivity extends AppCompatActivity {
 
     private Realm realm;
 
@@ -21,6 +23,7 @@ public class DatabaseActivity extends ActionBarActivity {
         realm = Realm.getInstance(this);
 
         setContentView(R.layout.database_list_view);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ListView listView = (ListView) findViewById(android.R.id.list);
         RealmResults<Location> results = realm.allObjects(Location.class);
@@ -53,11 +56,12 @@ public class DatabaseActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_location) {
             realm.beginTransaction();
-            RealmResults<Location> results = realm.allObjectsSorted(Location.class, "id", false);
-            int i = 1;
-            if (results.size() > 0) {
-                i = results.first().getId() + 1;
-            }
+//            RealmResults<Location> results = realm.allObjectsSorted(Location.class, "id", false);
+//            int i = 1;
+//            if (results.size() > 0) {
+//                i = results.first().getId() + 1;
+//            }
+            int i = (int) realm.where(Location.class).maximumInt("id") + 1;
             Location location = realm.createObject(Location.class);
             location.setName("location " + i);
             location.setAddress("address " + i);

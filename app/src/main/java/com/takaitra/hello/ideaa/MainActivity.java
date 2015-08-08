@@ -14,9 +14,12 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.takaitra.hello.ideaa.model.Location;
 
 import cyanogenmod.app.CMStatusBarManager;
 import cyanogenmod.app.CustomTile;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 import java.util.ArrayList;
@@ -45,10 +48,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Button mPlacesButton;
     private CustomTile mCustomTile;
 
+    private Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        realm = Realm.getInstance(this);
 
         initializeAddresses();
 
@@ -65,9 +72,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initializeAddresses() {
-        addresses.put("Home", "9425 34th Ave SW, Seattle, WA 98126");
-        addresses.put("Work", "2201 6th Ave, Seattle, WA 98121");
-        addresses.put("Impact Hub", "220 2nd Ave S, Seattle, WA 98104");
+//        addresses.put("Home", "9425 34th Ave SW, Seattle, WA 98126");
+//        addresses.put("Work", "2201 6th Ave, Seattle, WA 98121");
+//        addresses.put("Impact Hub", "220 2nd Ave S, Seattle, WA 98104");
+        RealmResults<Location> results = realm.allObjectsSorted(Location.class, "id", false);
+        for (int i = 0; i < results.size(); i++) {
+            Location location = results.get(i);
+            addresses.put(location.getName(), location.getAddress());
+        }
     }
 
     private void setupCustomTile() {
@@ -117,10 +129,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                CharSequence address = place.getAddress();
-                LatLng coordinates = place.getLatLng();
+//                CharSequence address = place.getAddress();
+//                LatLng coordinates = place.getLatLng();
                 // TODO: Persist the place in realm DB
 
+                realm.beginTransaction();
+                int i = (int) realm.where(Location.class).maximumInt("id") + 1;
+                Location location = realm.createObject(Location.class);
+                location.setName(place.getName().toString());
+                location.setAddress(place.getAddress().toString());
+                location.setLatitude(place.getLatLng().latitude);
+                location.setLatitude(place.getLatLng().longitude);
+                location.setId(i);
+                realm.commitTransaction();
             }
         }
     }
