@@ -3,6 +3,8 @@
     package="com.takaitra.hello.ideaa" >
 
     <uses-permission android:name="cyanogenmod.permission.PUBLISH_CUSTOM_TILE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +26,11 @@
                 <action android:name="org.cyanogenmod.samples.customtiles.ACTION_TOGGLE_STATE"/>
             </intent-filter>
         </receiver>
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBsnt5kLd1rK-76bBDe8U3dC2vt4_bQHLQ"/>
     </application>
 
 </manifest>
