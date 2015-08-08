@@ -2,12 +2,19 @@ package com.takaitra.hello.ideaa;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 import cyanogenmod.app.CMStatusBarManager;
 import cyanogenmod.app.CustomTile;
+
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,6 +24,9 @@ import java.util.Map;
  * Example sample activity to publish a tile with a toggle state
  */
 public class MainActivity extends Activity {
+
+
+    private static final int PLACE_PICKER_REQUEST = 1;
 
     public static final int REQUEST_CODE = 0;
     public static final int CUSTOM_TILE_ID = 1;
@@ -75,5 +85,26 @@ public class MainActivity extends Activity {
                 .build();
         CMStatusBarManager.getInstance(this)
                 .publishTile(CUSTOM_TILE_LIST_ID, mCustomTile);
+    }
+
+    private void pickPlace() {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        Context context = getApplicationContext();
+        try {
+            startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                // TODO: Persist the place in realm DB
+            }
+        }
     }
 }
