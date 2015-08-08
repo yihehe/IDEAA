@@ -13,6 +13,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import cyanogenmod.app.CMStatusBarManager;
 import cyanogenmod.app.CustomTile;
@@ -116,7 +117,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
+                CharSequence address = place.getAddress();
+                LatLng coordinates = place.getLatLng();
                 // TODO: Persist the place in realm DB
+
             }
         }
     }
