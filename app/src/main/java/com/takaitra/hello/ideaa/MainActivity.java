@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -57,9 +58,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         realm = Realm.getInstance(this);
 
-        initializeAddresses();
-
-        setupCustomTile();
+        updateTile();
 
         mDatabaseButton =
                 (Button) findViewById(R.id.database_button);
@@ -71,10 +70,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+    private void updateTile() {
+        initializeAddresses();
+
+        setupCustomTile();
+    }
+
     private void initializeAddresses() {
 //        addresses.put("Home", "9425 34th Ave SW, Seattle, WA 98126");
 //        addresses.put("Work", "2201 6th Ave, Seattle, WA 98121");
 //        addresses.put("Impact Hub", "220 2nd Ave S, Seattle, WA 98104");
+        addresses.clear();
         RealmResults<Location> results = realm.allObjectsSorted(Location.class, "id", false);
         for (int i = 0; i < results.size(); i++) {
             Location location = results.get(i);
@@ -129,9 +135,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-//                CharSequence address = place.getAddress();
-//                LatLng coordinates = place.getLatLng();
-                // TODO: Persist the place in realm DB
 
                 realm.beginTransaction();
                 int i = (int) realm.where(Location.class).maximumInt("id") + 1;
@@ -142,6 +145,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 location.setLatitude(place.getLatLng().longitude);
                 location.setId(i);
                 realm.commitTransaction();
+
+                updateTile();
             }
         }
     }
