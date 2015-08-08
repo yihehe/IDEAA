@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">IDEAA</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="custom_tile_publish">Publish standard tile</string>
+    <string name="custom_tile_list_publish">Publish standard tile with listview</string>
+    <string name="custom_tile_grid_publish">Publish standard tile with gridview</string>
+</resources>
