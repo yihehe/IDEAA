@@ -6,4 +6,11 @@
     <string name="custom_tile_publish">Publish standard tile</string>
     <string name="custom_tile_list_publish">Publish standard tile with listview</string>
     <string name="custom_tile_grid_publish">Publish standard tile with gridview</string>
+    <string name="title_database_activity">Database Browser</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:gravity="center_horizontal"
+              android:gravity="center"
         >
 
     <TextView
@@ -11,5 +11,17 @@
         android:layout_height="wrap_content"
         android:text="UI goes here"
         android:id="@+id/textView" />
+
+    <Button
+        android:id="@+id/places_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="places"/>
+
+    <Button
+        android:id="@+id/database_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="database"/>
 </LinearLayout>
 

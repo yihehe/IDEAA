@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -23,7 +25,7 @@ import java.util.Map;
 /**
  * Example sample activity to publish a tile with a toggle state
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private static final int PLACE_PICKER_REQUEST = 1;
@@ -38,6 +40,8 @@ public class MainActivity extends Activity {
 
     private static Map<String, String> addresses = new LinkedHashMap<>();
 
+    private Button mDatabaseButton;
+    private Button mPlacesButton;
     private CustomTile mCustomTile;
 
     @Override
@@ -48,6 +52,15 @@ public class MainActivity extends Activity {
         initializeAddresses();
 
         setupCustomTile();
+
+        mDatabaseButton =
+                (Button) findViewById(R.id.database_button);
+        mDatabaseButton.setOnClickListener(this);
+
+        mPlacesButton =
+                (Button) findViewById(R.id.places_button);
+        mPlacesButton.setOnClickListener(this);
+
     }
 
     private void initializeAddresses() {
@@ -105,6 +118,18 @@ public class MainActivity extends Activity {
                 Place place = PlacePicker.getPlace(data, this);
                 // TODO: Persist the place in realm DB
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.database_button:
+                startActivity(new Intent(this, DatabaseActivity.class));
+                break;
+            case R.id.places_button:
+                pickPlace();
+                break;
         }
     }
 }

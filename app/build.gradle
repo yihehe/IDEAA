@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('debug.keystore')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-
     defaultConfig {
         applicationId "com.takaitra.hello.ideaa"
         minSdkVersion 15
@@ -31,4 +38,5 @@ dependencies {
     compile 'org.cyanogenmod:platform.sdk:2.0-SNAPSHOT'
     compile 'com.google.android.gms:play-services-location:7.5.0'
     compile 'com.google.android.gms:play-services-maps:7.5.0'
+    compile 'io.realm:realm-android:0.82.1'
 }
