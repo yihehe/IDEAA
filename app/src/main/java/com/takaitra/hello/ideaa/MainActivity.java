@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -33,7 +30,7 @@ import java.util.Map;
 /**
  * Example sample activity to publish a tile with a toggle state
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private static final int PLACE_PICKER_REQUEST = 1;
@@ -51,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mDatabaseButton;
     private Button mPlacesButton;
     private CustomTile mCustomTile;
-    private LinearLayout container;
 
     private Realm realm;
 
@@ -59,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        setSupportActionBar((android.support.v7.widget.Toolbar) findViewById(R.id.toolbar));
-        container = (LinearLayout) findViewById(R.id.container);
 
         realm = Realm.getInstance(this);
 
@@ -152,11 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 location.setId(i);
                 realm.commitTransaction();
 
-<<<<<<< HEAD
                 updateTile();
-=======
-                Snackbar.make(container, "Place added!", Snackbar.LENGTH_LONG).setAction("OKAY", null).setActionTextColor(Color.RED).show();
->>>>>>> Adding toolbar
             }
         }
     }
