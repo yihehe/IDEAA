@@ -39,4 +39,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:7.5.0'
     compile 'com.google.android.gms:play-services-maps:7.5.0'
     compile 'io.realm:realm-android:0.82.1'
+    compile 'com.android.support:design:22.2.1'
 }
